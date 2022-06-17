@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 @SpringBootApplication
@@ -126,7 +127,7 @@ public class Application {
     try {
       System.out.println(arenaUpdate);
 
-      String[] commands = new String[]{"F", "R", "L", "T"};
+//      String[] commands = new String[]{"F", "R", "L", "T"};
       String[] direction = new String[]{"E", "S", "W", "N"};
 
       String selfLink = arenaUpdate._links.self.href;
@@ -142,7 +143,10 @@ public class Application {
       if (inRange) {
         return "T";
       } else {
-        return "R";
+        String[] commands = new String[]{"F", "R", "L", "T"};
+        Random ran = new Random();
+        int r = ran.nextInt(4) + 0;
+        return commands[r];
       }
 
 //    int i = new Random().nextInt(4);
