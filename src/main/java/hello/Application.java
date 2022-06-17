@@ -66,6 +66,63 @@ public class Application {
 
     String currentDirection = selfState.direction;
 
+    Map<String, PlayerState> allPlayerState = arenaUpdate.arena.state;
+
+    switch (currentDirection.toUpperCase()) {
+      case "E":
+        for (Map.Entry<String, PlayerState> map : allPlayerState.entrySet()) {
+          PlayerState playerState = map.getValue();
+          if (!playerState.y.equals(selfState.y)) {
+            break;
+          }
+          if (playerState.x.compareTo(selfState.x + 3) >= 0) {
+            return "T";
+          } else if (playerState.x.compareTo(selfState.x) > 0){
+            return "F";
+          }
+        }
+
+      case "W":
+        for (Map.Entry<String, PlayerState> map : allPlayerState.entrySet()) {
+          PlayerState playerState = map.getValue();
+          if (!playerState.y.equals(selfState.y)) {
+            break;
+          }
+          if (playerState.x.compareTo(selfState.x -3) <= 0) {
+            return "T";
+          } else if (playerState.x.compareTo(selfState.x) < 0){
+            return "F";
+          }
+        }
+        return "R";
+      case "N":
+        for (Map.Entry<String, PlayerState> map : allPlayerState.entrySet()) {
+          PlayerState playerState = map.getValue();
+          if (!playerState.x.equals(selfState.x)) {
+            break;
+          }
+          if (playerState.y.compareTo(selfState.y - 3) <= 0) {
+            return "T";
+          } else if (playerState.y.compareTo(selfState.y) < 0){
+            return "F";
+          }
+        }
+        return "R";
+      case "S":
+        for (Map.Entry<String, PlayerState> map : allPlayerState.entrySet()) {
+          PlayerState playerState = map.getValue();
+          if (!playerState.x.equals(selfState.x)) {
+            break;
+          }
+          if (playerState.y.compareTo(selfState.y + 3) >= 0) {
+            return "T";
+          } else if (playerState.y.compareTo(selfState.y) > 0){
+            return "F";
+          }
+        }
+        return "R";
+    }
+
 
     int i = new Random().nextInt(4);
     return commands[i];
