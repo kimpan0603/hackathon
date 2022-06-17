@@ -5,11 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 @SpringBootApplication
@@ -64,17 +61,18 @@ public class Application {
     return "Let the battle begin!";
   }
 
-  public PlayerState me(ArenaUpdate arenaUpdate) {
+  public PlayerState getMe(ArenaUpdate arenaUpdate) {
     return arenaUpdate.arena.state.get(arenaUpdate._links.self.href);
   }
 
   public boolean isWithinRange(PlayerState me, PlayerState ps) {
     Integer direction = isMeFacingPlayer(me, ps);
     switch (direction) {
-      case 1: return me.x + 3 <= ps.x;
-      case 2: return me.y + 3 <= ps.y;
-      case 3: return me.x - 3 <= ps.x;
-      case 4: return me.y - 3 <= ps.y;
+      case 1: return (me.x + 3) <= ps.x;
+      case 2: return (me.y + 3) <= ps.y;
+      case 3: return (me.x - 3) <= ps.x;
+      case 4: return (me.y - 3) <= ps.y;
+      case 0: return false;
     }
     return false;
   }
@@ -87,7 +85,8 @@ public class Application {
     Double minDistance = Double.MAX_VALUE;
     for (String playerLink: playerLinks) {
       PlayerState ps = arenaUpdate.arena.state.get(playerLink);
-      Double distance = calculateDistanceBetweenPoints(me(arenaUpdate).x, me(arenaUpdate).y, ps.x, ps.y);
+      PlayerState me = getMe(arenaUpdate);
+      Double distance = calculateDistanceBetweenPoints(me.x, me.y, ps.x, ps.y);
       if (Double.compare(minDistance, distance) > 1) {
         minDistance = distance;
         closestPlayer = ps;
@@ -138,7 +137,7 @@ public class Application {
 
       PlayerState closestPlayer = getClosestPlayer(arenaUpdate);
 
-      Boolean inRange = isWithinRange(me(arenaUpdate), closestPlayer);
+      Boolean inRange = isWithinRange(getMe(arenaUpdate), closestPlayer);
 
       if (inRange) {
         return "T";
