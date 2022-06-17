@@ -124,31 +124,33 @@ public class Application {
 
   @PostMapping("/**")
   public String index(@RequestBody ArenaUpdate arenaUpdate) {
-    System.out.println(arenaUpdate);
+    try {
+      System.out.println(arenaUpdate);
 
-    String[] commands = new String[]{"F", "R", "L", "T"};
-    String[] direction = new String[]{"E", "S", "W", "N"};
+      String[] commands = new String[]{"F", "R", "L", "T"};
+      String[] direction = new String[]{"E", "S", "W", "N"};
 
-    String selfLink = arenaUpdate._links.self.href;
-    PlayerState selfState = this.getSelfState(arenaUpdate);
-    List<Integer> dims = arenaUpdate.arena.dims;
+      String selfLink = arenaUpdate._links.self.href;
+      PlayerState selfState = this.getSelfState(arenaUpdate);
+      List<Integer> dims = arenaUpdate.arena.dims;
 
-    String currentDirection = selfState.direction;
+      String currentDirection = selfState.direction;
 
-    PlayerState closestPlayer = getClosestPlayer(arenaUpdate);
+      PlayerState closestPlayer = getClosestPlayer(arenaUpdate);
 
-    Boolean inRange = isWithinRange(me(arenaUpdate), closestPlayer);
+      Boolean inRange = isWithinRange(me(arenaUpdate), closestPlayer);
 
-    if (inRange) {
-      return "T";
-    } else {
-      return "R";
-    }
-
-
+      if (inRange) {
+        return "T";
+      } else {
+        return "R";
+      }
 
 //    int i = new Random().nextInt(4);
 //    return commands[i];
+    } catch (Exception e) {
+      return "T";
+    }
   }
 
   public PlayerState getSelfState(ArenaUpdate arenaUpdate) {
