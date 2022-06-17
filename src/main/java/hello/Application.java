@@ -73,7 +73,7 @@ public class Application {
         for (Map.Entry<String, PlayerState> map : allPlayerState.entrySet()) {
           PlayerState playerState = map.getValue();
           if (!playerState.y.equals(selfState.y)) {
-            break;
+            return "R";
           }
           if (playerState.x.compareTo(selfState.x + 3) >= 0) {
             return "T";
@@ -86,7 +86,7 @@ public class Application {
         for (Map.Entry<String, PlayerState> map : allPlayerState.entrySet()) {
           PlayerState playerState = map.getValue();
           if (!playerState.y.equals(selfState.y)) {
-            break;
+            return "R";
           }
           if (playerState.x.compareTo(selfState.x -3) <= 0) {
             return "T";
@@ -99,7 +99,7 @@ public class Application {
         for (Map.Entry<String, PlayerState> map : allPlayerState.entrySet()) {
           PlayerState playerState = map.getValue();
           if (!playerState.x.equals(selfState.x)) {
-            break;
+            return "R";
           }
           if (playerState.y.compareTo(selfState.y - 3) <= 0) {
             return "T";
@@ -112,7 +112,7 @@ public class Application {
         for (Map.Entry<String, PlayerState> map : allPlayerState.entrySet()) {
           PlayerState playerState = map.getValue();
           if (!playerState.x.equals(selfState.x)) {
-            break;
+            return "R";
           }
           if (playerState.y.compareTo(selfState.y + 3) >= 0) {
             return "T";
