@@ -65,7 +65,7 @@ public class Application {
   }
 
   public PlayerState me(ArenaUpdate arenaUpdate) {
-    return arenaUpdate.arena.state.get(arenaUpdate._links);
+    return arenaUpdate.arena.state.get(arenaUpdate._links.self.href);
   }
 
   public boolean isWithinRange(PlayerState me, PlayerState ps) {
