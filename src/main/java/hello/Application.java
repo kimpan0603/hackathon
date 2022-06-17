@@ -56,9 +56,24 @@ public class Application {
   @PostMapping("/**")
   public String index(@RequestBody ArenaUpdate arenaUpdate) {
     System.out.println(arenaUpdate);
+
     String[] commands = new String[]{"F", "R", "L", "T"};
+    String[] direction = new String[]{"E", "S", "W", "N"};
+
+    String selfLink = arenaUpdate._links.self.href;
+    PlayerState selfState = this.getSelfState(arenaUpdate);
+    List<Integer> dims = arenaUpdate.arena.dims;
+
+    String currentDirection = selfState.direction;
+
+
     int i = new Random().nextInt(4);
     return commands[i];
+  }
+
+  public PlayerState getSelfState(ArenaUpdate arenaUpdate) {
+    String selfLink = arenaUpdate._links.self.href;
+    return arenaUpdate.arena.state.get(selfLink);
   }
 
 }
