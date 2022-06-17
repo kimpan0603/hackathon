@@ -68,7 +68,7 @@ public class Application {
     return arenaUpdate.arena.state.get(arenaUpdate._links);
   }
 
-  public PlayerState closestPlayer(ArenaUpdate arenaUpdate) {
+  public PlayerState getClosestPlayer(ArenaUpdate arenaUpdate) {
     Set<String> playerLinks = arenaUpdate.arena.state.keySet();
 
     PlayerState closestPlayer  = null;
@@ -124,9 +124,18 @@ public class Application {
 
     String currentDirection = selfState.direction;
 
+    PlayerState closestPlayer = getClosestPlayer(arenaUpdate);
 
-    int i = new Random().nextInt(4);
-    return commands[i];
+    if (isMeFacingPlayer(me(arenaUpdate), closestPlayer)) {
+      return "T";
+    } else {
+      return "R";
+    }
+
+
+
+//    int i = new Random().nextInt(4);
+//    return commands[i];
   }
 
   public PlayerState getSelfState(ArenaUpdate arenaUpdate) {
