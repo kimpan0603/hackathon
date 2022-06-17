@@ -137,15 +137,16 @@ public class Application {
       String currentDirection = selfState.direction;
 
       PlayerState closestPlayer = getClosestPlayer(arenaUpdate);
+      PlayerState me = getMe(arenaUpdate);
 
       Boolean inRange = isWithinRange(getMe(arenaUpdate), closestPlayer);
 
       if (inRange) {
         return "T";
       } else {
-        String[] commands = new String[]{"F", "R", "L", "T"};
+        String[] commands = new String[]{"F", "R", "L"};
         Random ran = new Random();
-        int r = ran.nextInt(4) + 0;
+        int r = ran.nextInt(3) + 0;
         return commands[r];
       }
 
