@@ -68,6 +68,17 @@ public class Application {
     return arenaUpdate.arena.state.get(arenaUpdate._links);
   }
 
+  public boolean isWithinRange(PlayerState me, PlayerState ps) {
+    Integer direction = isMeFacingPlayer(me, ps);
+    switch (direction) {
+      case 1: return me.x + 3 <= ps.x;
+      case 2: return me.y + 3 <= ps.y;
+      case 3: return me.x - 3 <= ps.x;
+      case 4: return me.y - 3 <= ps.y;
+    }
+    return false;
+  }
+
   public PlayerState getClosestPlayer(ArenaUpdate arenaUpdate) {
     Set<String> playerLinks = arenaUpdate.arena.state.keySet();
 
@@ -89,26 +100,26 @@ public class Application {
     return closestPlayer;
   }
 
-  public boolean isMeFacingPlayer(PlayerState me, PlayerState ps) {
+  public Integer isMeFacingPlayer(PlayerState me, PlayerState ps) {
     if (me.direction.equalsIgnoreCase("e")) {
       if (me.y == ps.y && me.x < ps.x) {
-        return true;
+        return 1;
       }
     } else if (me.direction.equalsIgnoreCase("s")) {
       if (me.x == ps.x && me.y > ps.y) {
-        return true;
+        return 2;
       }
     } else if (me.direction.equalsIgnoreCase("w")) {
       if (me.y == ps.y && me.x > ps.x) {
-        return true;
+        return 3;
       }
     } else if (me.direction.equalsIgnoreCase("n")) {
       if (me.x == ps.x && me.y < ps.y) {
-        return true;
+        return 4;
       }
     }
 
-    return false;
+    return 0;
   }
 
   @PostMapping("/**")
@@ -126,7 +137,9 @@ public class Application {
 
     PlayerState closestPlayer = getClosestPlayer(arenaUpdate);
 
-    if (isMeFacingPlayer(me(arenaUpdate), closestPlayer)) {
+    Boolean inRange = isWithinRange(me(arenaUpdate), closestPlayer);
+
+    if (inRange) {
       return "T";
     } else {
       return "R";
